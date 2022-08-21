@@ -4,10 +4,11 @@ if(process.env.NODE_ENV !== "production") {
 
 
 const express = require('express');
+const connectDB = require('./config/db');
 const chats = require('./data/chats')
+connectDB();
 
 const app = express()
-
 
 app.get('/', (req, res) => {
     res.send('zazaza')
