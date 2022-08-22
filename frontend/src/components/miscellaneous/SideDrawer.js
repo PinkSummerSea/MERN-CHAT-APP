@@ -1,5 +1,5 @@
 import { Box, Button, Tooltip, Text, Menu, MenuButton, MenuList, Avatar, MenuItem, MenuDivider, Drawer, DrawerBody,
-  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Input, useToast, } from '@chakra-ui/react';
+  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Input, useToast, Spinner, } from '@chakra-ui/react';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import {useState} from 'react'
 import { ChatState } from '../../Context/ChatProvider';
@@ -10,7 +10,7 @@ import { useHistory } from 'react-router-dom';
 import axios from 'axios';
 
 const SideDrawer = () => {
-  const {user} = ChatState()
+  const {user, setSelectedChat, chats, setChats} = ChatState()
   const history = useHistory()
   const toast = useToast()
   const [search, setSearch] = useState("")
@@ -61,7 +61,31 @@ const SideDrawer = () => {
   }
 
   const accessChat = async (userId) => {
+    try {
+      setLoadingChat(true)
+      const config = {
+        headers: {
+          //"Content-type": "applicaton/json",
+          Authorization: `Bearer ${user.token}`
+        }
+      }
 
+      const {data} = await axios.post('/api/chat', {userId}, config)
+      console.log(data)
+      if (!chats.find(c => c._id === data._id)) setChats([data, ...chats]);
+      setSelectedChat(data)
+      setLoadingChat(false)
+      onClose()
+      } catch (err) {
+        toast({
+          title: 'Faild to fetch/create chat',
+          description: err.message,
+          status: 'warning',
+          duration: '5000',
+          isClosable: true,
+          position: 'bottom-left'
+        })
+      }
   }
 
   return (
@@ -140,6 +164,7 @@ const SideDrawer = () => {
                 />
               ))
             )}
+            { loadingChat && <Spinner ml='auto' d='flex' />}
           </DrawerBody>
         </DrawerContent>
       </Drawer>
