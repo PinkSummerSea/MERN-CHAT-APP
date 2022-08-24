@@ -4,39 +4,48 @@ import axios from 'axios'
 import {useState,useEffect} from 'react'
 import {ChatState} from '../Context/ChatProvider'
 import ChatLoading from './ChatLoading'
-import { getSender
- } from '../config/ChatLogics'
-const MyChats = () => {
-  const [loggedUser, setLoggedUser] = useState()
-  const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState()
+import { getSender } from '../config/ChatLogics'
+import GroupChatModal from './miscellaneous/GroupChatModal'
+
+
+const MyChats = ({fetchAgain, user}) => {
+  
+  const { selectedChat, setSelectedChat, setChats, chats, setUser, groupModalClosed } = ChatState()
+  const [loggedUser, setLoggedUser] = useState(user)
   const toast = useToast()
 
-  const fetchChats = async () => {
-    try {
-      const config = {
-        headers: {
-          Authorization: `Bearer ${user.token}`
-        }
-      }
-
-      const {data} = await axios.get('/api/chat', config)
-      setChats(data)
-    } catch(err) {
-      toast({
-          title: 'Faild to fetch chats',
-          description: err.message,
-          status: 'warning',
-          duration: '5000',
-          isClosable: true,
-          position: 'bottom-left'
-        })
-    }
-  }
+  
 
   useEffect(()=>{
-    setLoggedUser(JSON.parse(localStorage.getItem("userInfo")))
+    // setLoggedUser(JSON.parse(localStorage.getItem("userInfo")))
+    // console.log(loggedUser)
+    //setUser(JSON.parse(localStorage.getItem("userInfo")))
+    const fetchChats = async () => {
+      try {
+        const config = {
+          headers: {
+            Authorization: `Bearer ${user.token}`
+          }
+        }
+
+        const {data} = await axios.get('/api/chat', config)
+        await setChats(data)
+        console.log(data)
+        console.log(chats)
+      } catch(err) {
+        toast({
+            title: 'Faild to fetch chats',
+            description: err.message,
+            status: 'warning',
+            duration: '5000',
+            isClosable: true,
+            position: 'bottom-left'
+          })
+        }
+    }
     fetchChats()
-  },[])
+    
+  },[fetchAgain, user])
 
   return (
     <Box
@@ -60,11 +69,15 @@ const MyChats = () => {
         alignItems='center'
       >
         My Chats
-        <Button
-          d='flex'
-          fontSize={{base: '17px', md: '10px', lg: '17px'}}
-          rightIcon={<AddIcon />}
-        ></Button>
+        <GroupChatModal>
+          <Button
+            d="flex"
+            fontSize={{ base: "17px", md: "10px", lg: "17px" }}
+            rightIcon={<AddIcon />}
+          >
+            New Group Chat
+          </Button>
+        </GroupChatModal>
       </Box>
       <Box
         d='flex'
@@ -76,29 +89,27 @@ const MyChats = () => {
         borderRadius='lg'
         overflowY='HIDDEN'
       >
-        { chats? (
-          <Stack overflowY='scroll'>
-            {
-              chats.map(c => (
-                <Box
-                  onClick={()=> setSelectedChat(c)}
-                  cursor='pointer'
-                  bg={selectedChat === c? '#38B2AC' : '#E8E8E8'}
-                  color={selectedChat===c? 'white':'black'}
-                  px={3}
-                  py={2}
-                  borderRadius='lg'
-                  key={c._id}
-
-                >
-                  <Text>
-                    {!chats.isGroupChat?(getSender(loggedUser, c.users)):(c.chatName)}
-                  </Text>
-                </Box>
-              ))
-            }
+        {chats.length > 0 ? (
+          <Stack overflowY="scroll">
+            {chats.map((chat) =>  (
+              <Box
+                onClick={() => setSelectedChat(chat)}
+                cursor="pointer"
+                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
+                color={selectedChat === chat ? "white" : "black"}
+                px={3}
+                py={2}
+                borderRadius="lg"
+                key={chat._id}
+              >
+                <Text>
+                  {/* {console.log(chat)} */}
+                  {chat.isGroupChat ? chat.chatName : getSender(/* loggedUser*/user, chat.users)}
+                </Text>
+              </Box>)
+            )}
           </Stack>
-        ):(
+        ) : (
           <ChatLoading />
         )}
       </Box>

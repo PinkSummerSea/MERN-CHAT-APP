@@ -82,7 +82,7 @@ const createGroupChat = asyncHandler(async(req, res) => {
             .send('A group chat needs more than 2 users')
     }
 
-    users.push(req.user)
+    users.push(req.user._id)
 
     try {
         const groupChat = await Chat.create({
@@ -96,7 +96,7 @@ const createGroupChat = asyncHandler(async(req, res) => {
             .populate("users", "-password")
             .populate("groupAdmin", "-password")
 
-            return res.status(200).json(fullGroupChat)
+            return res.status(200).send(fullGroupChat)
     } catch(err){
         res.status(400)
         throw new Error(err.message)
