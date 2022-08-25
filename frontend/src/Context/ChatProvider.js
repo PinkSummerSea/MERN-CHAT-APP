@@ -10,6 +10,7 @@ const ChatProvider = ({children}) => {
     const [chats, setChats] = useState([])
     const history = useHistory()
     const [groupModalClosed, setGroupModelClosed] = useState(false)
+    const [notification, setNotification] = useState([])
 
     useEffect(()=>{
         const userInfo = JSON.parse(localStorage.getItem("userInfo"))
@@ -21,7 +22,7 @@ const ChatProvider = ({children}) => {
     },[history])
     
 
-    return (<ChatContext.Provider value={{user, setUser, selectedChat, setSelectedChat, chats, setChats, groupModalClosed, setGroupModelClosed}}>{children}</ChatContext.Provider>)
+    return (<ChatContext.Provider value={{user, setUser, selectedChat, setSelectedChat, chats, setChats, groupModalClosed, setGroupModelClosed, notification, setNotification}}>{children}</ChatContext.Provider>)
 }
 
 export const ChatState = () => {

@@ -1,5 +1,5 @@
 import { Box, Button, Tooltip, Text, Menu, MenuButton, MenuList, Avatar, MenuItem, MenuDivider, Drawer, DrawerBody,
-  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Input, useToast, Spinner, } from '@chakra-ui/react';
+  DrawerFooter, DrawerHeader, DrawerOverlay, DrawerContent, DrawerCloseButton, useDisclosure, Input, useToast, Spinner, effect, } from '@chakra-ui/react';
 import { BellIcon, ChevronDownIcon } from '@chakra-ui/icons'
 import {useState} from 'react'
 import { ChatState } from '../../Context/ChatProvider';
@@ -8,9 +8,11 @@ import ChatLoading from '../ChatLoading';
 import UserListItem from '../UserAvatar/UserListItem';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import { getSender } from '../../config/ChatLogics';
+import NotificationBadge, {Effect} from 'react-notification-badge'
 
 const SideDrawer = () => {
-  const {user, setSelectedChat, chats, setChats} = ChatState()
+  const {user, setSelectedChat, chats, setChats, notification, setNotification} = ChatState()
   const history = useHistory()
   const toast = useToast()
   const [search, setSearch] = useState("")
@@ -110,9 +112,20 @@ const SideDrawer = () => {
         <div>
           <Menu>
             <MenuButton p={1}>
+              <NotificationBadge count={notification.length} effect={Effect.SCALE}/>
               <BellIcon fontSize='2xl' m={1}/>
             </MenuButton>
-            {/* <MenuList></MenuList> */}
+            <MenuList pl={2}>
+              {!notification.length && "No New Messages"}
+              {notification.map(n => (
+                <MenuItem key={n._id} onClick={()=>{
+                  setSelectedChat(n.chat)
+                  setNotification(notification.filter(noti => noti !== n))
+                }}>
+                  {n.chat.isGroupChat? `New Message in ${n.chat.chatName}`:`New Message from ${getSender(user, n.chat.users)}`}
+                </MenuItem>
+              ))}
+            </MenuList>
           </Menu>
           <Menu>
             <MenuButton 
