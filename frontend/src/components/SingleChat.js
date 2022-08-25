@@ -25,7 +25,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
   const [socketConnected, setSocketConnected] = useState(false)
   const toast = useToast()
   const [typing, setTyping] = useState(false)
-  const [isTyping, setIsTyping] = useState(false)
+  const [isTyping, setIsTyping] = useState(false) 
   const {user, selectedChat, setSelectedChat, notification, setNotification} = ChatState()
 
   const defaultOptions = {

@@ -19,7 +19,7 @@ const ChatProvider = ({children}) => {
         if(!userInfo){
             history.push('/')
         }
-    },[history])
+    },[])
     
 
     return (<ChatContext.Provider value={{user, setUser, selectedChat, setSelectedChat, chats, setChats, groupModalClosed, setGroupModelClosed, notification, setNotification}}>{children}</ChatContext.Provider>)

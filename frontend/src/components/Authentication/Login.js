@@ -3,8 +3,11 @@ import { VStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, B
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import { ChatState } from '../../Context/ChatProvider';
 
 const Login = () => {
+
+  const {setUser} = ChatState()
   const [show, setShow] = useState(false)
 
   const [email, setEmail] = useState()
@@ -33,21 +36,21 @@ const Login = () => {
 
     // console.log(email, password);
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
+      // const config = {
+      //   headers: {
+      //     "Content-type": "application/json",
+      //   },
+      // };
 
       const { data } = await axios.post(
         "/api/user/login",
-        { email, password },
-        config
+        { email, password }
       );
 
-      // console.log(JSON.stringify(data));
-      
+      console.log(data);
+      setUser(data)
       localStorage.setItem("userInfo", JSON.stringify(data));
+      console.log(localStorage.getItem("userInfo"))
       toast({
         title: "Login Successful",
         status: "success",
