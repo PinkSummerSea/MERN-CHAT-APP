@@ -14,7 +14,7 @@ import Lottie from 'react-lottie'
 import animationData from '../animations/typing.json'
 
 
-const ENDPOINT = "http://localhost:3001";
+const ENDPOINT = "https://dry-cliffs-96197.herokuapp.com/";
 let socket, selectedChatCompare;
 
 const SingleChat = ({fetchAgain, setFetchAgain}) => {

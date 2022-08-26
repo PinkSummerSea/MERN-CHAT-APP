@@ -50,7 +50,7 @@ const PORT = process.env.PORT || 3002
 const io = require('socket.io')(httpServer, {
     pingTimeOut: 60000,
     cors: {
-        origin: "http://localhost:3001"
+        origin: "https://dry-cliffs-96197.herokuapp.com/"
     }
 })
 
