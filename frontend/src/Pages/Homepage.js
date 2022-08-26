@@ -20,16 +20,16 @@ const Homepage = () => {
         d='flex'
         justifyContent='center'
         p={3}
-        bg='white'
+        bg='rgba(255,255,255,0.3)'
         w="100%"
         m="40px 0 15px 0"
         borderRadius='lg'
         borderWidth='1px'
       >
-        <Text fontSize='4xl' fontFamily='Work Sans' color='black'>TALKATIVE</Text>
+        <Text fontSize='4xl' fontFamily='Silkscreen' color='black'>TALKATIVE</Text>
       </Box>
       <Box
-        bg='white'
+        bg='rgba(255,255,255,0.3)'
         w='100%'
         p={4}
         borderRadius='lg'

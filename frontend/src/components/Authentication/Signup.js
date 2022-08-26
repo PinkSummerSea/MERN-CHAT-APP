@@ -2,8 +2,10 @@ import {useState} from 'react'
 import { VStack, FormControl, FormLabel, Input, InputGroup, InputRightElement, Button, useToast } from '@chakra-ui/react'
 import axios from 'axios'
 import {useHistory} from 'react-router-dom'
+import { ChatState } from '../../Context/ChatProvider';
 
 const Signup = () => {
+  const {setUser, setSelectedChat} = ChatState()
   const [show, setShow] = useState(false)
   const [name, setName] = useState()
   const [email, setEmail] = useState()
@@ -91,13 +93,15 @@ const Signup = () => {
     }
 
     try {
-        const config = {
-            headers: {
-                "Content-type": 'application/json'
-            }
-        }
-        const {data} = await axios.post('/api/user', {name, email, password, pic}, config)
+        // const config = {
+        //     headers: {
+        //         "Content-type": 'application/json'
+        //     }
+        // }
+        const {data} = await axios.post('/api/user', {name, email, password, pic})
         console.log(data)
+        setUser(data)
+        setSelectedChat(null)
         toast({
             title: "Registration Successful",
             status: "success",
@@ -129,6 +133,7 @@ const Signup = () => {
             <Input 
                 placeholder='Enter your name'
                 onChange={(e)=>{setName(e.target.value)}}
+                bg="white"
             />
         </FormControl>
         <FormControl id='email' isRequired>
@@ -136,6 +141,7 @@ const Signup = () => {
             <Input 
                 placeholder='Enter your email'
                 onChange={(e)=>{setEmail(e.target.value)}}
+                bg="white"
             />
         </FormControl>
         <FormControl id='password' isRequired>
@@ -145,6 +151,7 @@ const Signup = () => {
                     type={show?"text":"password"}
                     placeholder='Enter your password'
                     onChange={(e)=>{setPassword(e.target.value)}}
+                    bg="white"
                 />
                 <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -160,6 +167,7 @@ const Signup = () => {
                     type={show?"text":"password"}
                     placeholder='Confirm password'
                     onChange={(e)=>{setConfirmPassword(e.target.value)}}
+                    bg="white"
                 />
                 <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>
@@ -175,6 +183,7 @@ const Signup = () => {
                 p='1.5'
                 accept='image/*'
                 onChange={(e)=>{postDetails(e.target.files[0])}}
+                bg="white"
             />
         </FormControl>
         <Button

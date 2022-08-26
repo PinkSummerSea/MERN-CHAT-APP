@@ -37,7 +37,7 @@ function ProfileModal({user, children}) {
         <ModalContent h='410px'>
           <ModalHeader
             fontSize='40px'
-            fontFamily='Work sans'
+            fontFamily='Silkscreen'
             d='flex'
             justifyContent='center'
           >{user.name}</ModalHeader>
@@ -56,7 +56,7 @@ function ProfileModal({user, children}) {
             />
             <Text 
                 fontSize={{base: "28px", md: '30px'}}
-                fontFamily='Work sans'
+                fontFamily='Silkscreen'
             >
                 Email: {user.email}
             </Text>

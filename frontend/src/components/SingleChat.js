@@ -167,7 +167,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                         pb={3}
                         px={2}
                         w="100%"
-                        fontFamily="Work sans"
+                        fontFamily="Silkscreen"
                         d="flex"
                         justifyContent={{ base: "space-between" }}
                         alignItems="center"
@@ -194,7 +194,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                         flexDir="column"
                         justifyContent="flex-end"
                         p={3}
-                        bg="#E8E8E8"
+                        bg="rgba(255, 255, 242, 0.25)"
                         w="100%"
                         h="100%"
                         borderRadius="lg"
@@ -238,7 +238,7 @@ const SingleChat = ({fetchAgain, setFetchAgain}) => {
                 </>
             ) : (
                 <Box d='flex' alignItems='center' justifyContent='center' h='100%'>
-                    <Text fontSize='3xl' pb={3} fontFamily='Work sans'>
+                    <Text fontSize='3xl' pb={3} fontFamily='Silkscreen'>
                         Click on a user to start chatting
                     </Text>
                 </Box>

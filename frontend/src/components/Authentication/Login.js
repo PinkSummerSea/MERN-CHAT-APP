@@ -7,7 +7,7 @@ import { ChatState } from '../../Context/ChatProvider';
 
 const Login = () => {
 
-  const {setUser} = ChatState()
+  const {setUser, setSelectedChat} = ChatState()
   const [show, setShow] = useState(false)
 
   const [email, setEmail] = useState()
@@ -49,6 +49,7 @@ const Login = () => {
 
       console.log(data);
       setUser(data)
+      setSelectedChat(null)
       localStorage.setItem("userInfo", JSON.stringify(data));
       console.log(localStorage.getItem("userInfo"))
       toast({
@@ -82,6 +83,7 @@ const Login = () => {
                 value={email}
                 placeholder='Enter your email'
                 onChange={(e)=>{setEmail(e.target.value)}}
+                bg="white"
             />
         </FormControl>
         <FormControl id='password' isRequired>
@@ -92,6 +94,7 @@ const Login = () => {
                     type={show?"text":"password"}
                     placeholder='Enter your password'
                     onChange={(e)=>{setPassword(e.target.value)}}
+                    bg="white"
                 />
                 <InputRightElement width='4.5rem'>
                     <Button h='1.75rem' size='sm' onClick={handleClick}>

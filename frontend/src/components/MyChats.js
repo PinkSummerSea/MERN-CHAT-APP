@@ -1,5 +1,5 @@
 import { AddIcon } from '@chakra-ui/icons'
-import { Box, Button, Stack, useToast, Text } from '@chakra-ui/react'
+import { Box, Button, Stack, useToast, Text, background } from '@chakra-ui/react'
 import axios from 'axios'
 import {useState,useEffect} from 'react'
 import {ChatState} from '../Context/ChatProvider'
@@ -53,27 +53,37 @@ const MyChats = ({fetchAgain, user}) => {
       flexDir='column'
       alignItems='center'
       p={3}
-      bg='white'
-      w={{base: '100%', md:'31%'}}
+      mr={5}
+      bg='rgba(255, 0, 0, 0.1)'
+      w={{base: '100%', md:'20%'}}
       borderRadius='lg'
       borderWidth='1px'
     >
       <Box
-        pb={3}
-        px={3}
+        pb={5}
+        px={5}
         fontSize={{base: '28px', md: '30px'}}
-        fontFamily='Work sand'
+        fontFamily='Silkscreen'
         d='flex'
+        flexDir='column'
         w='100%'
-        justifyContent='space-between'
+        //justifyContent='space-between'
         alignItems='center'
       >
-        My Chats
+        <Text>
+           My Chats
+        </Text>
         <GroupChatModal>
           <Button
             d="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
             rightIcon={<AddIcon />}
+            bg="rgb(246, 244, 182)"
+            _hover={
+              {
+                bg:"rgb(246, 244, 182)"
+              }
+            }
           >
             New Group Chat
           </Button>
@@ -83,7 +93,7 @@ const MyChats = ({fetchAgain, user}) => {
         d='flex'
         flexDir='column'
         p={3}
-        bg='#F8F8F8'
+        bg='rgba(255, 255, 242, 0.25)'
         w='100%'
         h='100%'
         borderRadius='lg'
@@ -95,12 +105,14 @@ const MyChats = ({fetchAgain, user}) => {
               <Box
                 onClick={() => setSelectedChat(chat)}
                 cursor="pointer"
-                bg={selectedChat === chat ? "#38B2AC" : "#E8E8E8"}
-                color={selectedChat === chat ? "white" : "black"}
+                bg={selectedChat === chat ? "rgb(188, 173, 250)" : "rgb(223, 250, 251)"}
+                color='black'
+                //{selectedChat === chat ? "white" : "black"}
                 px={3}
                 py={2}
                 borderRadius="lg"
                 key={chat._id}
+                fontFamily='Silkscreen'
               >
                 <Text>
                   {/* {console.log(chat)} */}
@@ -110,7 +122,12 @@ const MyChats = ({fetchAgain, user}) => {
             )}
           </Stack>
         ) : (
-          <ChatLoading />
+          // <ChatLoading />
+          <Text>
+            Uh oh. You have no chats to display yet.
+            Search a user to start one-on-one chat. 
+            Or Start a group chat by clicking New Group Chat button.
+          </Text>
         )}
       </Box>
     </Box>

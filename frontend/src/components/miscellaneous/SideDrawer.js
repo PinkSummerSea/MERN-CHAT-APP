@@ -96,19 +96,20 @@ const SideDrawer = () => {
         d='flex'
         justifyContent='space-between'
         alignItems='center'
-        bg='white'
+        bg='rgba(255,255,255,0.5)'
         w='100%'
         p='5px 10px 5px 10px'
         borderWidth='5px'
+        borderColor='rgba(255,255,255,0.1)'
       >
         <Tooltip label='Search Users to Chat' hasArrow placement='bottom-end'>
-          <Button variant='ghost' onClick={onOpen}>
+          <Button variant='ghost' onClick={onOpen} fontFamily='Silkscreen'>
             <i class="fa-solid fa-magnifying-glass"></i>
-            <Text d={{base: 'none', md: 'flex'}} px='4'>Search User</Text>
+            <Text d={{base: 'none', md: 'flex'}} px='4' fontFamily='Silkscreen'>Search User</Text>
           </Button>
         </Tooltip>
 
-        <Text fontSize='2xl' fontFamily='Work sans'>TALKATIVE</Text>
+        <Text fontSize='2xl' fontFamily='Silkscreen'>TALKATIVE</Text>
         <div>
           <Menu>
             <MenuButton p={1}>
@@ -152,7 +153,7 @@ const SideDrawer = () => {
         isOpen={isOpen}
       >
         <DrawerOverlay />
-        <DrawerContent>
+        <DrawerContent fontFamily='Silkscreen'>
           <DrawerHeader borderBottomWidth='1px'>Search Users</DrawerHeader>
           <DrawerBody>
             <Box d='flex' pb={2}>

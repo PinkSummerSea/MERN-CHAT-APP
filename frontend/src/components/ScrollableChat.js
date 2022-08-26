@@ -10,7 +10,7 @@ const ScrollableChat = ({messages}) => {
         {messages && messages.map((m, i) => (
       
             <div
-                style={{display: 'flex', marginBottom: '5px'}}
+                style={{display: 'flex', marginBottom: '5px', fontFamily:'Silkscreen'}}
                 key={m._id}
             >   
 
@@ -20,7 +20,7 @@ const ScrollableChat = ({messages}) => {
                       </Tooltip>
                     )}
                     <span
-                        style={{backgroundColor: m.sender._id === user._id ? "lavender" : "skyblue", 
+                        style={{backgroundColor: m.sender._id === user._id ? "lavender" : "rgb(246, 244, 182)", 
                         borderRadius: '20px',
                         padding: '5px 15px',
                         maxWidth: '75%',
